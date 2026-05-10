@@ -13,7 +13,7 @@
     --green-dark: #10a84f;
     --green-dim: rgba(65,235,170,0.12);
     --green-border: rgba(65,235,170,0.25);
-    --bg: #080d18;
+    --bg: #000000;
     --surface: #0f1627;
     --surface2: #141d30;
     --surface3: #1a2438;
@@ -543,12 +543,12 @@
           <div class="field-group">
             <label for="email">Email Address <span class="req">*</span></label>
             <input type="email" id="email" name="email" placeholder="ali@gmail.com" required>
-            <span class="field-error" id="err-email">Please enter a valid email</span>
+            <span class="field-error" id="err-email">Sirf Gmail, Yahoo, Outlook ya university email allowed hai</span>
           </div>
           <div class="field-group">
             <label for="phone">Phone Number <span class="req">*</span></label>
             <input type="tel" id="phone" name="phone" placeholder="+92 300 0000000" required>
-            <span class="field-error" id="err-phone">Please enter your phone number</span>
+            <span class="field-error" id="err-phone">Phone number 11 digits se zyada nahi hona chahiye</span>
           </div>
           <div class="field-group">
             <label for="dob">Date of Birth <span class="req">*</span></label>
@@ -619,13 +619,26 @@
               <label class="skill-tag"><input type="checkbox" name="skills" value="Figma"> Figma</label>
               <label class="skill-tag"><input type="checkbox" name="skills" value="Canva"> Canva</label>
               <label class="skill-tag"><input type="checkbox" name="skills" value="Adobe XD"> Adobe XD</label>
+              <label class="skill-tag"><input type="checkbox" name="skills" value="Photoshop"> Photoshop</label>
+              <label class="skill-tag"><input type="checkbox" name="skills" value="Illustrator"> Illustrator</label>
+              <label class="skill-tag"><input type="checkbox" name="skills" value="Premiere Pro"> Premiere Pro</label>
+              <label class="skill-tag"><input type="checkbox" name="skills" value="Video Editing"> Video Editing</label>
+              <label class="skill-tag"><input type="checkbox" name="skills" value="Content Writing"> Content Writing</label>
               <label class="skill-tag"><input type="checkbox" name="skills" value="Excel/Sheets"> Excel/Sheets</label>
               <label class="skill-tag"><input type="checkbox" name="skills" value="Power BI"> Power BI</label>
               <label class="skill-tag"><input type="checkbox" name="skills" value="SQL"> SQL</label>
+              <label class="skill-tag"><input type="checkbox" name="skills" value="Node.js"> Node.js</label>
+              <label class="skill-tag"><input type="checkbox" name="skills" value="PHP"> PHP</label>
+              <label class="skill-tag"><input type="checkbox" name="skills" value="C/C++"> C/C++</label>
+              <label class="skill-tag"><input type="checkbox" name="skills" value="Java"> Java</label>
               <label class="skill-tag"><input type="checkbox" name="skills" value="SEO"> SEO</label>
               <label class="skill-tag"><input type="checkbox" name="skills" value="Social Media"> Social Media</label>
               <label class="skill-tag"><input type="checkbox" name="skills" value="Shopify"> Shopify</label>
               <label class="skill-tag"><input type="checkbox" name="skills" value="WordPress"> WordPress</label>
+              <label class="skill-tag" id="other-skill-tag"><input type="checkbox" name="skills" value="__other__" id="cb-other"> ✏️ Other</label>
+            </div>
+            <div id="other-skill-wrap" style="display:none; margin-top:10px;">
+              <input type="text" id="other-skill-input" placeholder="Apni skill likhein..." style="max-width:320px;">
             </div>
             <span class="field-error" id="err-skills">Please select at least one skill</span>
           </div>
@@ -688,6 +701,14 @@
                 <span class="dept-icon">🔍</span>
                 <span class="dept-name">SEO & Content</span>
               </label>
+              <label class="dept-card" id="dept-other-card">
+                <input type="radio" name="department" value="__dept_other__" id="dept-other-radio">
+                <span class="dept-icon">✏️</span>
+                <span class="dept-name">Other</span>
+              </label>
+            </div>
+            <div id="dept-other-wrap" style="display:none;margin-top:12px;">
+              <input type="text" id="dept-other-input" placeholder="Apna department likhein..." style="max-width:340px;">
             </div>
             <span class="field-error" id="err-dept">Please select a department</span>
           </div>
@@ -695,26 +716,14 @@
           <div class="field-group full">
             <label>Work Mode Preference <span class="req">*</span></label>
             <div class="avail-options" id="mode-options">
-              <label class="avail-card">
-                <input type="radio" name="workmode" value="On-Site (Lahore Office)">
-                <div class="avail-title">🏢 On-Site</div>
-                <div class="avail-sub">Lahore Office · Full presence</div>
-              </label>
+              
               <label class="avail-card">
                 <input type="radio" name="workmode" value="Remote">
                 <div class="avail-title">💻 Remote</div>
                 <div class="avail-sub">Work from anywhere · Online</div>
               </label>
-              <label class="avail-card">
-                <input type="radio" name="workmode" value="Hybrid">
-                <div class="avail-title">🔄 Hybrid</div>
-                <div class="avail-sub">Mix of both · Flexible</div>
-              </label>
-              <label class="avail-card">
-                <input type="radio" name="workmode" value="Open to anything">
-                <div class="avail-title">✨ Open to All</div>
-                <div class="avail-sub">Whatever works best</div>
-              </label>
+              
+              
             </div>
             <span class="field-error" id="err-mode">Please select a work mode</span>
           </div>
@@ -762,6 +771,30 @@
           </label>
           <span class="field-error" id="err-agree">Please accept the terms to continue</span>
         </div>
+
+        <!-- FOLLOW BEFORE SUBMIT -->
+        <div style="margin-top:16px;padding:20px;background:var(--surface2);border:1px solid var(--border);border-radius:var(--radius-sm);">
+          <p style="font-size:12px;font-weight:700;color:rgba(255,255,255,0.35);letter-spacing:1.5px;text-transform:uppercase;margin-bottom:14px;">📲 Follow Karein — Submit Se Pehle</p>
+          <p style="font-size:13px;color:var(--muted);margin-bottom:16px;line-height:1.6;">Hamare official pages follow karein taake internship updates milti rahein. Teeno follow karne ke baad Submit button unlock ho ga.</p>
+          <div style="display:flex;flex-wrap:wrap;gap:10px;margin-bottom:16px;">
+            <a href="https://www.facebook.com/share/18fjqTEg9R/" target="_blank" id="follow-fb"
+               onclick="markFollow('fb')"
+               style="display:flex;align-items:center;gap:8px;background:var(--surface3);border:1.5px solid var(--border);border-radius:10px;padding:11px 18px;text-decoration:none;color:var(--muted);font-size:13px;font-weight:600;transition:all 0.2s;">
+              <span>📘</span><span>Facebook</span><span id="fc-fb" style="display:none;color:var(--green);">✓</span>
+            </a>
+            <a href="https://www.linkedin.com/company/qwetrum-technologies/" target="_blank" id="follow-li"
+               onclick="markFollow('li')"
+               style="display:flex;align-items:center;gap:8px;background:var(--surface3);border:1.5px solid var(--border);border-radius:10px;padding:11px 18px;text-decoration:none;color:var(--muted);font-size:13px;font-weight:600;transition:all 0.2s;">
+              <span>💼</span><span>LinkedIn</span><span id="fc-li" style="display:none;color:var(--green);">✓</span>
+            </a>
+            <a href="https://www.instagram.com/qwetrumtechnologies" target="_blank" id="follow-ig"
+               onclick="markFollow('ig')"
+               style="display:flex;align-items:center;gap:8px;background:var(--surface3);border:1.5px solid var(--border);border-radius:10px;padding:11px 18px;text-decoration:none;color:var(--muted);font-size:13px;font-weight:600;transition:all 0.2s;">
+              <span>📸</span><span>Instagram</span><span id="fc-ig" style="display:none;color:var(--green);">✓</span>
+            </a>
+          </div>
+          <p id="follow-status-txt" style="font-size:12px;color:var(--dimmer);">ابھی تک 0 / 3 follow کیے ہیں — سب follow کریں پھر Submit کریں</p>
+        </div>
       </div>
 
     </form>
@@ -792,10 +825,14 @@
     </div>
   </div>
 
-  <div class="ty-socials">
-    <a href="https://www.linkedin.com/company/qwetrum-technologies/" target="_blank" class="ty-social">LinkedIn</a>
-    <a href="https://www.instagram.com/qwetrumtechnologies" target="_blank" class="ty-social">Instagram</a>
-    <a href="https://www.facebook.com/share/18fjqTEg9R/" target="_blank" class="ty-social">Facebook</a>
+  <div class="ty-card" style="margin-bottom:24px;">
+    <div class="ty-card-title">📲 Follow Us to Stay Updated</div>
+    <p style="font-size:13px;color:var(--muted);margin-bottom:16px;line-height:1.6;">Internship updates, announcements aur tips ke liye hamare official pages follow karein</p>
+    <div style="display:flex;flex-wrap:wrap;gap:10px;justify-content:center;">
+      <a href="https://www.facebook.com/share/18fjqTEg9R/" target="_blank" style="display:flex;align-items:center;gap:8px;background:rgba(65,235,170,0.06);border:1px solid rgba(65,235,170,0.2);border-radius:10px;padding:12px 18px;text-decoration:none;color:var(--green);font-size:13px;font-weight:600;transition:all 0.2s;" onmouseover="this.style.background='rgba(65,235,170,0.12)'" onmouseout="this.style.background='rgba(65,235,170,0.06)'">📘 Facebook</a>
+      <a href="https://www.linkedin.com/company/qwetrum-technologies/" target="_blank" style="display:flex;align-items:center;gap:8px;background:rgba(65,235,170,0.06);border:1px solid rgba(65,235,170,0.2);border-radius:10px;padding:12px 18px;text-decoration:none;color:var(--green);font-size:13px;font-weight:600;transition:all 0.2s;" onmouseover="this.style.background='rgba(65,235,170,0.12)'" onmouseout="this.style.background='rgba(65,235,170,0.06)'">💼 LinkedIn</a>
+      <a href="https://www.instagram.com/qwetrumtechnologies" target="_blank" style="display:flex;align-items:center;gap:8px;background:rgba(65,235,170,0.06);border:1px solid rgba(65,235,170,0.2);border-radius:10px;padding:12px 18px;text-decoration:none;color:var(--green);font-size:13px;font-weight:600;transition:all 0.2s;" onmouseover="this.style.background='rgba(65,235,170,0.12)'" onmouseout="this.style.background='rgba(65,235,170,0.06)'">📸 Instagram</a>
+    </div>
   </div>
   <div class="ty-footer">© 2026 Qwetrum Technologies Pvt Ltd · qwetrumtechnologies.tech</div>
 </div>
@@ -877,8 +914,17 @@ function validateStep(step) {
     phone.classList.remove('error'); dob.classList.remove('error'); city.classList.remove('error');
 
     if (!fname.value.trim()) { showError('err-fname', fname); ok = false; }
-    if (!email.value.trim() || !/\S+@\S+\.\S+/.test(email.value)) { showError('err-email', email); ok = false; }
-    if (!phone.value.trim()) { showError('err-phone', phone); ok = false; }
+    const emailVal = email.value.trim().toLowerCase();
+    const emailDomain = emailVal.split('@')[1] || '';
+    const allowedDomains = ['gmail.com','yahoo.com','yahoo.co.uk','yahoo.co.in','outlook.com','hotmail.com','live.com','icloud.com','protonmail.com'];
+    const validEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(emailVal) && (
+      allowedDomains.includes(emailDomain) ||
+      emailDomain.endsWith('.edu.pk') || emailDomain.endsWith('.edu') ||
+      emailDomain.endsWith('.ac.pk') || emailDomain.endsWith('.ac.uk')
+    );
+    if (!validEmail) { showError('err-email', email); ok = false; }
+    const phoneDigits = phone.value.replace(/\D/g,'');
+    if (!phone.value.trim() || phoneDigits.length > 11) { showError('err-phone', phone); ok = false; }
     if (!dob.value) { showError('err-dob', dob); ok = false; }
     if (!city.value.trim()) { showError('err-city', city); ok = false; }
   }
@@ -937,14 +983,34 @@ btnBack.addEventListener('click', () => {
 document.querySelectorAll('.skill-tag').forEach(tag => {
   tag.addEventListener('click', () => {
     const cb = tag.querySelector('input');
-    setTimeout(() => tag.classList.toggle('selected', cb.checked), 0);
+    setTimeout(() => {
+      tag.classList.toggle('selected', cb.checked);
+      if (cb.id === 'cb-other') {
+        document.getElementById('other-skill-wrap').style.display = cb.checked ? 'block' : 'none';
+      }
+    }, 0);
   });
 });
 
-// Department cards
+// Phone: block input beyond 11 digits
+document.getElementById('phone').addEventListener('input', function() {
+  const digits = this.value.replace(/\D/g, '');
+  if (digits.length > 11) {
+    let count = 0, trimmed = '';
+    for (const ch of this.value) {
+      if (/\d/.test(ch)) { if (count < 11) { trimmed += ch; count++; } }
+      else trimmed += ch;
+    }
+    this.value = trimmed;
+  }
+});
+
+// Department cards + Other toggle
 document.getElementById('dept-grid').addEventListener('change', e => {
   document.querySelectorAll('.dept-card').forEach(c => c.classList.remove('selected'));
   if (e.target.closest('.dept-card')) e.target.closest('.dept-card').classList.add('selected');
+  const isOther = e.target.value === '__dept_other__';
+  document.getElementById('dept-other-wrap').style.display = isOther ? 'block' : 'none';
 });
 
 // Work mode cards
@@ -953,10 +1019,43 @@ document.getElementById('mode-options').addEventListener('change', e => {
   if (e.target.closest('.avail-card')) e.target.closest('.avail-card').classList.add('selected');
 });
 
+// --- FOLLOW TRACKING ---
+const followedPlatforms = new Set();
+
+function markFollow(platform) {
+  setTimeout(() => {
+    followedPlatforms.add(platform);
+    const link = document.getElementById('follow-' + platform);
+    const check = document.getElementById('fc-' + platform);
+    if (link) {
+      link.style.borderColor = 'var(--green)';
+      link.style.color = 'var(--green)';
+      link.style.background = 'rgba(65,235,170,0.08)';
+    }
+    if (check) check.style.display = 'inline';
+    const count = followedPlatforms.size;
+    const txt = document.getElementById('follow-status-txt');
+    if (count >= 3) {
+      txt.textContent = '✅ Shukriya! Ab aap Submit kar sakte hain.';
+      txt.style.color = 'var(--green)';
+    } else {
+      txt.textContent = count + ' / 3 follow kiye — ' + (3 - count) + ' aur baaki hain';
+    }
+  }, 400);
+}
+
+function getDept() {
+  const raw = (document.querySelector('input[name="department"]:checked') || {}).value || '';
+  if (raw === '__dept_other__') return document.getElementById('dept-other-input').value.trim() || 'Other';
+  return raw;
+}
+
 function buildSummary() {
   const f = document.getElementById('internship-form');
-  const skills = Array.from(document.querySelectorAll('input[name="skills"]:checked')).map(c => c.value).join(', ') || '—';
-  const dept = (document.querySelector('input[name="department"]:checked') || {}).value || '—';
+  const rawSkills = Array.from(document.querySelectorAll('input[name="skills"]:checked')).map(c => c.value);
+  const otherTxt = document.getElementById('other-skill-input').value.trim();
+  const skills = rawSkills.map(v => v === '__other__' ? (otherTxt || 'Other') : v).join(', ') || '—';
+  const dept = getDept() || '—';
   const mode = (document.querySelector('input[name="workmode"]:checked') || {}).value || '—';
 
   const rows = [
@@ -986,13 +1085,24 @@ function buildSummary() {
 async function submitForm() {
   if (!validateStep(4)) return;
 
+  // Check all 3 followed
+  if (followedPlatforms.size < 3) {
+    const txt = document.getElementById('follow-status-txt');
+    txt.textContent = '⚠️ Pehle teeno pages follow karein, phir submit karein!';
+    txt.style.color = 'var(--danger)';
+    document.getElementById('follow-status-txt').scrollIntoView({ behavior: 'smooth', block: 'center' });
+    return;
+  }
+
   const sub = document.getElementById('btn-submit');
   sub.textContent = '⏳ Submitting...';
   sub.disabled = true;
 
   const f = document.getElementById('internship-form');
-  const skills = Array.from(document.querySelectorAll('input[name="skills"]:checked')).map(c => c.value).join(', ');
-  const dept = (document.querySelector('input[name="department"]:checked') || {}).value || '';
+  const rawSkills = Array.from(document.querySelectorAll('input[name="skills"]:checked')).map(c => c.value);
+  const otherTxt = document.getElementById('other-skill-input').value.trim();
+  const skills = rawSkills.map(v => v === '__other__' ? (otherTxt || 'Other') : v).join(', ');
+  const dept = getDept();
   const mode = (document.querySelector('input[name="workmode"]:checked') || {}).value || '';
 
   const params = new URLSearchParams({
