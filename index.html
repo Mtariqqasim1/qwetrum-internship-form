@@ -46,26 +46,60 @@
     pointer-events: none; z-index: 0;
   }
 
+  /* ─── ANIMATIONS ─── */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(24px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+  @keyframes fadeIn {
+    from { opacity: 0; }
+    to   { opacity: 1; }
+  }
+  @keyframes slideRight {
+    from { opacity: 0; transform: translateX(-20px); }
+    to   { opacity: 1; transform: translateX(0); }
+  }
+  @keyframes pop {
+    from { transform: scale(0); opacity: 0; }
+    to   { transform: scale(1); opacity: 1; }
+  }
+  @keyframes pulse-glow {
+    0%, 100% { box-shadow: 0 0 0 0 rgba(65,235,170,0.0); }
+    50%       { box-shadow: 0 0 18px 4px rgba(65,235,170,0.18); }
+  }
+  @keyframes shimmer {
+    0%   { background-position: -400px 0; }
+    100% { background-position: 400px 0; }
+  }
+
   /* HEADER */
   .header {
     position: sticky; top: 0; z-index: 100;
-    background: rgba(8,13,24,0.85);
+    background: rgba(8,13,24,0.90);
     backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
     border-bottom: 1px solid var(--border);
-    padding: 16px 24px;
+    padding: 10px 24px;
     display: flex; align-items: center; justify-content: space-between;
     flex-wrap: wrap; gap: 12px;
+    animation: fadeIn 0.5s ease both;
   }
   .header-brand { display: flex; align-items: center; gap: 12px; }
-  .logo-mark {
-    width: 42px; height: 42px;
-    background: linear-gradient(135deg, var(--green), var(--green-dark));
-    border-radius: 12px;
-    display: flex; align-items: center; justify-content: center;
-    font-family: 'Syne', sans-serif;
-    font-weight: 800; font-size: 20px; color: #000;
-    flex-shrink: 0;
+
+  /* LOGO FIX */
+  .logo {
+    display: flex;
+    align-items: center;
+    overflow: hidden;
+    height: 48px;
   }
+  .logo img {
+    height: 48px;
+    width: auto;
+    object-fit: contain;
+    display: block;
+  }
+
   .brand-text { line-height: 1.2; }
   .brand-name {
     font-family: 'Syne', sans-serif;
@@ -79,6 +113,12 @@
     font-size: 12px; font-weight: 600;
     padding: 6px 14px; border-radius: 50px;
     letter-spacing: 0.3px;
+    animation: fadeIn 0.7s 0.2s ease both;
+    transition: background 0.2s, box-shadow 0.2s;
+  }
+  .header-badge:hover {
+    background: rgba(65,235,170,0.18);
+    box-shadow: 0 0 12px rgba(65,235,170,0.15);
   }
 
   /* HERO BANNER */
@@ -87,6 +127,7 @@
     padding: 60px 24px 40px;
     text-align: center;
     max-width: 700px; margin: 0 auto;
+    animation: fadeUp 0.7s 0.1s cubic-bezier(0.22,1,0.36,1) both;
   }
   .hero-tag {
     display: inline-block;
@@ -97,21 +138,25 @@
     padding: 5px 16px; border-radius: 50px;
     letter-spacing: 1.5px; text-transform: uppercase;
     margin-bottom: 20px;
+    animation: slideRight 0.6s 0.2s ease both;
   }
   .hero h1 {
     font-family: 'Syne', sans-serif;
-    font-size: clamp(28px, 5vw, 46px);
+    font-size: clamp(26px, 5vw, 46px);
     font-weight: 800; line-height: 1.15;
     margin-bottom: 16px;
+    animation: fadeUp 0.7s 0.3s cubic-bezier(0.22,1,0.36,1) both;
   }
   .hero h1 span { color: var(--green); }
   .hero p {
     font-size: 16px; color: var(--muted);
     line-height: 1.7; max-width: 520px; margin: 0 auto 32px;
+    animation: fadeUp 0.7s 0.4s cubic-bezier(0.22,1,0.36,1) both;
   }
   .info-pills {
     display: flex; flex-wrap: wrap; gap: 10px;
     justify-content: center; margin-bottom: 8px;
+    animation: fadeUp 0.7s 0.5s cubic-bezier(0.22,1,0.36,1) both;
   }
   .pill {
     background: var(--surface2);
@@ -119,11 +164,14 @@
     padding: 7px 16px; border-radius: 50px;
     font-size: 13px; color: var(--muted);
     display: flex; align-items: center; gap: 6px;
+    transition: border-color 0.2s, color 0.2s;
   }
+  .pill:hover { border-color: var(--green-border); }
   .pill strong { color: var(--text); font-weight: 600; }
   .pill-dot {
     width: 6px; height: 6px; border-radius: 50%;
     background: var(--green); flex-shrink: 0;
+    animation: pulse-glow 2s infinite;
   }
 
   /* FORM WRAPPER */
@@ -131,6 +179,7 @@
     position: relative; z-index: 1;
     max-width: 760px; margin: 0 auto;
     padding: 0 20px 80px;
+    animation: fadeUp 0.7s 0.5s cubic-bezier(0.22,1,0.36,1) both;
   }
 
   /* PROGRESS BAR */
@@ -140,7 +189,9 @@
     border-radius: var(--radius);
     padding: 20px 24px;
     margin-bottom: 28px;
+    transition: box-shadow 0.3s;
   }
+  .progress-bar-wrap:hover { box-shadow: 0 4px 20px rgba(65,235,170,0.06); }
   .progress-steps {
     display: flex; gap: 6px; align-items: center;
     margin-bottom: 12px; flex-wrap: wrap;
@@ -148,10 +199,10 @@
   .step-label {
     font-size: 11px; font-weight: 600;
     letter-spacing: 0.5px; color: var(--dimmer);
-    transition: color 0.3s;
-    flex: 1; min-width: 60px; text-align: center;
+    transition: color 0.35s ease, transform 0.2s ease;
+    flex: 1; min-width: 50px; text-align: center;
   }
-  .step-label.active { color: var(--green); }
+  .step-label.active { color: var(--green); transform: scale(1.05); }
   .step-label.done { color: var(--muted); }
   .step-divider { width: 20px; height: 1px; background: var(--border); flex-shrink: 0; }
   .progress-track {
@@ -162,7 +213,7 @@
     height: 100%;
     background: linear-gradient(90deg, var(--green), var(--green-dark));
     border-radius: 4px;
-    transition: width 0.5s cubic-bezier(0.4,0,0.2,1);
+    transition: width 0.55s cubic-bezier(0.4,0,0.2,1);
     width: 25%;
   }
 
@@ -172,8 +223,15 @@
     border: 1px solid var(--border);
     border-radius: var(--radius);
     overflow: hidden;
+    transition: box-shadow 0.3s;
   }
-  .form-section { display: none; padding: 32px; }
+  .form-card:hover { box-shadow: 0 8px 40px rgba(0,0,0,0.3); }
+
+  .form-section {
+    display: none;
+    padding: 32px;
+    animation: fadeUp 0.45s cubic-bezier(0.22,1,0.36,1) both;
+  }
   .form-section.active { display: block; }
 
   .section-header {
@@ -188,7 +246,9 @@
     border: 1px solid var(--green-border);
     display: flex; align-items: center; justify-content: center;
     font-size: 20px; flex-shrink: 0;
+    transition: background 0.25s, transform 0.2s;
   }
+  .section-icon:hover { background: rgba(65,235,170,0.2); transform: scale(1.07); }
   .section-header h2 {
     font-family: 'Syne', sans-serif;
     font-size: 20px; font-weight: 700; color: var(--text);
@@ -226,12 +286,16 @@
     font-size: 15px;
     padding: 12px 16px;
     outline: none;
-    transition: border-color 0.2s, background 0.2s;
+    transition: border-color 0.25s ease, background 0.25s ease, box-shadow 0.25s ease, transform 0.15s ease;
     -webkit-appearance: none;
   }
   input:focus, select:focus, textarea:focus {
     border-color: var(--green-border);
     background: var(--surface3);
+    box-shadow: 0 0 0 3px rgba(65,235,170,0.08);
+  }
+  input:hover:not(:focus), select:hover:not(:focus), textarea:hover:not(:focus) {
+    border-color: rgba(255,255,255,0.14);
   }
   input::placeholder, textarea::placeholder { color: var(--dimmer); }
   select { cursor: pointer; }
@@ -241,7 +305,7 @@
   /* DEPARTMENT CARDS */
   .dept-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
     gap: 10px;
     margin-top: 4px;
   }
@@ -251,14 +315,21 @@
     border-radius: var(--radius-sm);
     padding: 14px 12px;
     cursor: pointer;
-    transition: all 0.2s;
+    transition: all 0.25s cubic-bezier(0.22,1,0.36,1);
     text-align: center;
     user-select: none;
   }
-  .dept-card:hover { border-color: var(--green-border); background: var(--surface3); }
+  .dept-card:hover {
+    border-color: var(--green-border);
+    background: var(--surface3);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 16px rgba(65,235,170,0.08);
+  }
   .dept-card.selected {
     border-color: var(--green);
     background: var(--green-dim);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 20px rgba(65,235,170,0.15);
   }
   .dept-card input { display: none; }
   .dept-icon { font-size: 24px; margin-bottom: 6px; display: block; }
@@ -277,15 +348,21 @@
     padding: 6px 14px;
     font-size: 13px; color: var(--muted);
     cursor: pointer;
-    transition: all 0.18s;
+    transition: all 0.2s cubic-bezier(0.22,1,0.36,1);
     user-select: none;
   }
-  .skill-tag:hover { border-color: var(--green-border); color: var(--text); }
+  .skill-tag:hover {
+    border-color: var(--green-border);
+    color: var(--text);
+    transform: translateY(-1px);
+    box-shadow: 0 2px 10px rgba(65,235,170,0.08);
+  }
   .skill-tag.selected {
     background: var(--green-dim);
     border-color: var(--green);
     color: var(--green);
     font-weight: 600;
+    transform: translateY(-1px);
   }
   .skill-tag input { display: none; }
 
@@ -300,11 +377,21 @@
     border: 1.5px solid var(--border);
     border-radius: var(--radius-sm);
     padding: 14px;
-    cursor: pointer; transition: all 0.2s;
+    cursor: pointer;
+    transition: all 0.25s cubic-bezier(0.22,1,0.36,1);
     user-select: none;
   }
-  .avail-card:hover { border-color: var(--green-border); }
-  .avail-card.selected { border-color: var(--green); background: var(--green-dim); }
+  .avail-card:hover {
+    border-color: var(--green-border);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 16px rgba(65,235,170,0.08);
+  }
+  .avail-card.selected {
+    border-color: var(--green);
+    background: var(--green-dim);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 20px rgba(65,235,170,0.15);
+  }
   .avail-card input { display: none; }
   .avail-title { font-size: 14px; font-weight: 600; color: var(--text); margin-bottom: 2px; }
   .avail-card.selected .avail-title { color: var(--green); }
@@ -323,7 +410,8 @@
     font-size: 14px; font-weight: 600;
     padding: 12px 28px;
     border-radius: 50px; border: none;
-    cursor: pointer; transition: all 0.2s;
+    cursor: pointer;
+    transition: all 0.25s cubic-bezier(0.22,1,0.36,1);
     display: inline-flex; align-items: center; gap: 8px;
   }
   .btn-back {
@@ -331,24 +419,77 @@
     border: 1px solid var(--border);
     color: var(--muted);
   }
-  .btn-back:hover { border-color: var(--green-border); color: var(--text); }
+  .btn-back:hover {
+    border-color: var(--green-border);
+    color: var(--text);
+    transform: translateX(-2px);
+  }
   .btn-next {
     background: linear-gradient(135deg, var(--green), var(--green-dark));
     color: #000; font-weight: 700;
     box-shadow: 0 4px 20px rgba(65,235,170,0.25);
   }
-  .btn-next:hover { transform: translateY(-1px); box-shadow: 0 6px 24px rgba(65,235,170,0.35); }
-  .btn-next:disabled { opacity: 0.5; cursor: not-allowed; transform: none; }
+  .btn-next:hover {
+    transform: translateY(-2px) scale(1.02);
+    box-shadow: 0 8px 28px rgba(65,235,170,0.38);
+  }
+  .btn-next:active { transform: translateY(0) scale(0.98); }
+  .btn-next:disabled { opacity: 0.5; cursor: not-allowed; transform: none; box-shadow: none; }
   .btn-submit {
     background: linear-gradient(135deg, var(--green), var(--green-dark));
     color: #000; font-weight: 700;
     box-shadow: 0 4px 20px rgba(65,235,170,0.25);
   }
-  .btn-submit:hover { transform: translateY(-1px); box-shadow: 0 6px 28px rgba(65,235,170,0.4); }
+  .btn-submit:hover {
+    transform: translateY(-2px) scale(1.02);
+    box-shadow: 0 8px 32px rgba(65,235,170,0.42);
+  }
+  .btn-submit:active { transform: translateY(0) scale(0.98); }
 
   /* ERROR */
-  .field-error { font-size: 12px; color: var(--danger); display: none; margin-top: 2px; }
-  input.error, select.error, textarea.error { border-color: var(--danger); }
+  .field-error {
+    font-size: 12px; color: var(--danger);
+    display: none; margin-top: 2px;
+    animation: fadeIn 0.2s ease;
+  }
+  input.error, select.error, textarea.error {
+    border-color: var(--danger);
+    box-shadow: 0 0 0 3px rgba(255,107,107,0.1);
+    animation: shake 0.35s ease;
+  }
+  @keyframes shake {
+    0%,100% { transform: translateX(0); }
+    20%      { transform: translateX(-6px); }
+    40%      { transform: translateX(6px); }
+    60%      { transform: translateX(-4px); }
+    80%      { transform: translateX(4px); }
+  }
+
+  /* SOCIAL FOLLOW BUTTONS */
+  .social-follow-btn {
+    display: inline-flex; align-items: center; gap: 8px;
+    background: var(--surface3);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    padding: 10px 18px;
+    text-decoration: none;
+    color: var(--muted);
+    font-size: 13px; font-weight: 600;
+    transition: all 0.25s cubic-bezier(0.22,1,0.36,1);
+    cursor: pointer;
+  }
+  .social-follow-btn:hover {
+    border-color: var(--green-border);
+    color: var(--text);
+    background: var(--surface2);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 16px rgba(65,235,170,0.1);
+  }
+  .follow-tick {
+    color: var(--green);
+    font-weight: 700;
+    animation: pop 0.3s cubic-bezier(0.34,1.56,0.64,1);
+  }
 
   /* SUMMARY */
   .summary-grid { display: flex; flex-direction: column; gap: 14px; }
@@ -358,13 +499,20 @@
     border-radius: var(--radius-sm);
     padding: 14px 16px;
     display: flex; gap: 12px;
+    transition: border-color 0.2s, background 0.2s;
+    animation: fadeUp 0.35s ease both;
+  }
+  .summary-row:hover {
+    border-color: var(--green-border);
+    background: var(--surface3);
   }
   .summary-label {
     font-size: 12px; color: var(--green);
     font-weight: 600; letter-spacing: 0.5px;
     text-transform: uppercase; min-width: 120px;
+    flex-shrink: 0;
   }
-  .summary-value { font-size: 14px; color: var(--text); flex: 1; line-height: 1.6; }
+  .summary-value { font-size: 14px; color: var(--text); flex: 1; line-height: 1.6; word-break: break-word; }
 
   /* THANK YOU */
   .thankyou-screen {
@@ -377,8 +525,12 @@
     justify-content: center;
     padding: 40px 24px;
     text-align: center;
+    overflow-y: auto;
   }
-  .thankyou-screen.active { display: flex; }
+  .thankyou-screen.active {
+    display: flex;
+    animation: fadeIn 0.5s ease both;
+  }
 
   .ty-glow {
     position: absolute; top: 0; left: 50%;
@@ -395,11 +547,8 @@
     display: flex; align-items: center; justify-content: center;
     font-size: 40px;
     margin-bottom: 28px;
-    animation: pop 0.5s cubic-bezier(0.34,1.56,0.64,1);
-  }
-  @keyframes pop {
-    from { transform: scale(0); opacity: 0; }
-    to   { transform: scale(1); opacity: 1; }
+    animation: pop 0.6s cubic-bezier(0.34,1.56,0.64,1) both;
+    box-shadow: 0 0 40px rgba(65,235,170,0.35);
   }
 
   .ty-tag {
@@ -410,6 +559,7 @@
     padding: 5px 16px; border-radius: 50px;
     letter-spacing: 1.5px; text-transform: uppercase;
     margin-bottom: 16px;
+    animation: fadeUp 0.5s 0.2s ease both;
   }
 
   .ty-title {
@@ -417,6 +567,7 @@
     font-size: clamp(26px, 5vw, 40px);
     font-weight: 800;
     margin-bottom: 16px; line-height: 1.2;
+    animation: fadeUp 0.5s 0.3s ease both;
   }
   .ty-title span { color: var(--green); }
 
@@ -424,6 +575,7 @@
     font-size: 16px; color: var(--muted);
     max-width: 480px; line-height: 1.8;
     margin-bottom: 36px;
+    animation: fadeUp 0.5s 0.4s ease both;
   }
 
   .ty-card {
@@ -432,7 +584,13 @@
     border-radius: var(--radius);
     padding: 24px 32px;
     max-width: 480px; width: 100%;
-    margin-bottom: 36px;
+    margin-bottom: 24px;
+    animation: fadeUp 0.5s 0.5s ease both;
+    transition: border-color 0.2s, box-shadow 0.2s;
+  }
+  .ty-card:hover {
+    border-color: var(--green-border);
+    box-shadow: 0 8px 30px rgba(0,0,0,0.25);
   }
   .ty-card-title {
     font-size: 12px; font-weight: 600; color: var(--dimmer);
@@ -452,30 +610,70 @@
   }
   .ty-step-txt { font-size: 14px; color: var(--muted); line-height: 1.5; padding-top: 3px; }
 
-  .ty-socials { display: flex; gap: 12px; margin-bottom: 24px; }
-  .ty-social {
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: var(--radius-sm);
-    padding: 10px 20px;
+  /* Thank you social links */
+  .ty-social-link {
+    display: flex; align-items: center; gap: 8px;
+    background: rgba(65,235,170,0.06);
+    border: 1px solid rgba(65,235,170,0.2);
+    border-radius: 10px;
+    padding: 12px 18px;
+    text-decoration: none;
+    color: var(--green);
     font-size: 13px; font-weight: 600;
-    color: var(--muted); text-decoration: none;
-    transition: all 0.2s;
+    transition: all 0.25s cubic-bezier(0.22,1,0.36,1);
   }
-  .ty-social:hover { border-color: var(--green-border); color: var(--green); }
+  .ty-social-link:hover {
+    background: rgba(65,235,170,0.14);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 16px rgba(65,235,170,0.15);
+  }
 
-  .ty-footer { font-size: 12px; color: var(--dimmer); }
+  .ty-socials-wrap {
+    display: flex; flex-wrap: wrap; gap: 10px;
+    justify-content: center;
+  }
 
-  /* RESPONSIVE */
+  .ty-footer { font-size: 12px; color: var(--dimmer); margin-top: 8px; }
+
+  /* ─── RESPONSIVE ─── */
+  @media (max-width: 720px) {
+    .form-section { padding: 24px 18px; }
+    .form-nav { padding: 18px 18px; }
+    .fields-grid { grid-template-columns: 1fr; }
+    .dept-grid { grid-template-columns: repeat(3, 1fr); }
+  }
+
   @media (max-width: 600px) {
-    .form-section { padding: 22px 16px; }
-    .form-nav { padding: 18px 16px; }
+    .header { padding: 10px 16px; }
+    .hero { padding: 40px 16px 28px; }
+    .form-wrapper { padding: 0 12px 60px; }
+    .form-section { padding: 20px 14px; }
+    .form-nav { padding: 16px 14px; gap: 10px; }
+    .btn { padding: 11px 20px; font-size: 13px; }
     .dept-grid { grid-template-columns: repeat(2, 1fr); }
     .avail-options { grid-template-columns: 1fr; }
     .summary-row { flex-direction: column; gap: 4px; }
+    .summary-label { min-width: unset; }
     .ty-card { padding: 18px 16px; }
-    .ty-socials { flex-wrap: wrap; justify-content: center; }
-    .step-label { font-size: 9px; }
+    .step-label { font-size: 9px; min-width: 40px; }
+    .progress-bar-wrap { padding: 16px 14px; }
+    .hero h1 { font-size: clamp(22px, 7vw, 32px); }
+    .hero p { font-size: 14px; }
+    .info-pills { gap: 8px; }
+    .pill { font-size: 12px; padding: 6px 12px; }
+    .section-header { gap: 12px; }
+    .section-header h2 { font-size: 17px; }
+  }
+
+  @media (max-width: 400px) {
+    .dept-grid { grid-template-columns: repeat(2, 1fr); }
+    .form-nav { flex-direction: column-reverse; align-items: stretch; }
+    .btn { justify-content: center; width: 100%; }
+    .header-badge { font-size: 11px; padding: 5px 10px; }
+  }
+
+  @media (min-width: 900px) {
+    .fields-grid { grid-template-columns: repeat(2, 1fr); }
   }
 </style>
 </head>
@@ -485,7 +683,7 @@
 <header class="header">
   <div class="header-brand">
     <div class="logo">
-      <img src="logo.png" alt="Qwetrum Technologies" style="height: 230px; margin-top: -100px; margin-bottom: -100px; margin-left: -50px;">
+      <img src="logo.png" alt="Qwetrum Technologies">
     </div>
   </div>
   <div class="header-badge">🎓 Internship 2026</div>
@@ -538,27 +736,27 @@
           <div class="field-group">
             <label for="fname">Full Name <span class="req">*</span></label>
             <input type="text" id="fname" name="name" placeholder="Muhammad Ali Khan" required>
-            <span class="field-error" id="err-fname">Please enter your full name</span>
+            <span class="field-error" id="err-fname">Please enter your full name.</span>
           </div>
           <div class="field-group">
             <label for="email">Email Address <span class="req">*</span></label>
             <input type="email" id="email" name="email" placeholder="ali@gmail.com" required>
-            <span class="field-error" id="err-email">Sirf Gmail, Yahoo, Outlook ya university email allowed hai</span>
+            <span class="field-error" id="err-email">Only Gmail, Yahoo, Outlook, or university email addresses are accepted.</span>
           </div>
           <div class="field-group">
             <label for="phone">Phone Number <span class="req">*</span></label>
             <input type="tel" id="phone" name="phone" placeholder="+92 300 0000000" required>
-            <span class="field-error" id="err-phone">Phone number 11 digits se zyada nahi hona chahiye</span>
+            <span class="field-error" id="err-phone">Phone number must not exceed 11 digits.</span>
           </div>
           <div class="field-group">
             <label for="dob">Date of Birth <span class="req">*</span></label>
             <input type="date" id="dob" name="dob" required>
-            <span class="field-error" id="err-dob">Please select your date of birth</span>
+            <span class="field-error" id="err-dob">Please select your date of birth.</span>
           </div>
           <div class="field-group">
             <label for="city">City <span class="req">*</span></label>
             <input type="text" id="city" name="city" placeholder="Lahore" required>
-            <span class="field-error" id="err-city">Please enter your city</span>
+            <span class="field-error" id="err-city">Please enter your city.</span>
           </div>
           <div class="field-group">
             <label for="gender">Gender</label>
@@ -577,7 +775,7 @@
         <div class="section-header">
           <div class="section-icon">🎓</div>
           <div>
-            <h2>Education & Skills</h2>
+            <h2>Education &amp; Skills</h2>
             <p>Your academic background and technical skills</p>
           </div>
         </div>
@@ -585,12 +783,12 @@
           <div class="field-group">
             <label for="university">University / College <span class="req">*</span></label>
             <input type="text" id="university" name="university" placeholder="LUMS, FAST, UET..." required>
-            <span class="field-error" id="err-university">Please enter your institution</span>
+            <span class="field-error" id="err-university">Please enter your institution.</span>
           </div>
           <div class="field-group">
             <label for="degree">Degree / Program <span class="req">*</span></label>
             <input type="text" id="degree" name="degree" placeholder="BS Computer Science" required>
-            <span class="field-error" id="err-degree">Please enter your degree</span>
+            <span class="field-error" id="err-degree">Please enter your degree.</span>
           </div>
           <div class="field-group">
             <label for="semester">Current Semester / Year <span class="req">*</span></label>
@@ -602,7 +800,7 @@
               <option>7th Semester</option><option>8th Semester</option>
               <option>Fresh Graduate</option>
             </select>
-            <span class="field-error" id="err-semester">Please select your semester</span>
+            <span class="field-error" id="err-semester">Please select your semester.</span>
           </div>
           <div class="field-group">
             <label for="cgpa">CGPA / Percentage</label>
@@ -638,9 +836,9 @@
               <label class="skill-tag" id="other-skill-tag"><input type="checkbox" name="skills" value="__other__" id="cb-other"> ✏️ Other</label>
             </div>
             <div id="other-skill-wrap" style="display:none; margin-top:10px;">
-              <input type="text" id="other-skill-input" placeholder="Apni skill likhein..." style="max-width:320px;">
+              <input type="text" id="other-skill-input" placeholder="Enter your skill(s) here..." style="max-width:320px;">
             </div>
-            <span class="field-error" id="err-skills">Please select at least one skill</span>
+            <span class="field-error" id="err-skills">Please select at least one skill.</span>
           </div>
           <div class="field-group">
             <label for="portfolio">Portfolio / GitHub / LinkedIn</label>
@@ -663,7 +861,7 @@
         <div class="section-header">
           <div class="section-icon">🏢</div>
           <div>
-            <h2>Department & Availability</h2>
+            <h2>Department &amp; Availability</h2>
             <p>Choose your preferred internship track</p>
           </div>
         </div>
@@ -699,7 +897,7 @@
               <label class="dept-card">
                 <input type="radio" name="department" value="SEO & Content">
                 <span class="dept-icon">🔍</span>
-                <span class="dept-name">SEO & Content</span>
+                <span class="dept-name">SEO &amp; Content</span>
               </label>
               <label class="dept-card" id="dept-other-card">
                 <input type="radio" name="department" value="__dept_other__" id="dept-other-radio">
@@ -708,30 +906,32 @@
               </label>
             </div>
             <div id="dept-other-wrap" style="display:none;margin-top:12px;">
-              <input type="text" id="dept-other-input" placeholder="Apna department likhein..." style="max-width:340px;">
+              <input type="text" id="dept-other-input" placeholder="Enter your preferred department..." style="max-width:340px;">
             </div>
-            <span class="field-error" id="err-dept">Please select a department</span>
+            <span class="field-error" id="err-dept">Please select a department.</span>
           </div>
 
           <div class="field-group full">
             <label>Work Mode Preference <span class="req">*</span></label>
             <div class="avail-options" id="mode-options">
-              
+              <label class="avail-card">
+                <input type="radio" name="workmode" value="On-Site">
+                <div class="avail-title">🏢 On-Site</div>
+                <div class="avail-sub">Work from our office · In-person</div>
+              </label>
               <label class="avail-card">
                 <input type="radio" name="workmode" value="Remote">
                 <div class="avail-title">💻 Remote</div>
                 <div class="avail-sub">Work from anywhere · Online</div>
               </label>
-              
-              
             </div>
-            <span class="field-error" id="err-mode">Please select a work mode</span>
+            <span class="field-error" id="err-mode">Please select a work mode.</span>
           </div>
 
           <div class="field-group full">
             <label for="motivation">Why do you want to intern at Qwetrum? <span class="req">*</span></label>
             <textarea id="motivation" name="motivation" rows="4" placeholder="Tell us what excites you about Qwetrum and what you hope to learn..." required></textarea>
-            <span class="field-error" id="err-motivation">Please share your motivation (min 30 characters)</span>
+            <span class="field-error" id="err-motivation">Please share your motivation (minimum 30 characters).</span>
           </div>
 
           <div class="field-group">
@@ -764,36 +964,49 @@
           </div>
         </div>
         <div class="summary-grid" id="summary-grid"></div>
-        <div style="margin-top:20px;padding:16px;background:var(--green-dim);border:1px solid var(--green-border);border-radius:var(--radius-sm);">
-          <label style="display:flex;align-items:flex-start;gap:10px;cursor:pointer;color:var(--muted);font-weight:400;font-size:14px;">
-            <input type="checkbox" id="agree" name="agree" style="width:18px;height:18px;margin-top:2px;accent-color:var(--green);flex-shrink:0;">
-            I confirm that the information provided is accurate. I agree to Qwetrum Technologies' <strong style="color:var(--green);">internship terms & conditions</strong> and consent to being contacted regarding my application.
+        <div style="margin-top:20px;padding:16px 20px;background:var(--green-dim);border:1px solid var(--green-border);border-radius:var(--radius-sm);">
+          <label style="display:flex;align-items:flex-start;gap:12px;cursor:pointer;color:var(--muted);font-weight:400;font-size:14px;line-height:1.6;">
+            <input type="checkbox" id="agree" name="agree" style="width:18px;height:18px;min-width:18px;margin-top:3px;accent-color:var(--green);flex-shrink:0;">
+            <span>I confirm that all information provided is accurate. I agree to Qwetrum Technologies&#39; <strong style="color:var(--green);">internship terms &amp; conditions</strong> and consent to being contacted regarding my application.</span>
           </label>
-          <span class="field-error" id="err-agree">Please accept the terms to continue</span>
+          <span class="field-error" id="err-agree">Please accept the terms to continue.</span>
         </div>
 
         <!-- FOLLOW BEFORE SUBMIT -->
         <div style="margin-top:16px;padding:20px;background:var(--surface2);border:1px solid var(--border);border-radius:var(--radius-sm);">
-          <p style="font-size:12px;font-weight:700;color:rgba(255,255,255,0.35);letter-spacing:1.5px;text-transform:uppercase;margin-bottom:14px;">📲 Follow Karein — Submit Se Pehle</p>
-          <p style="font-size:13px;color:var(--muted);margin-bottom:16px;line-height:1.6;">Hamare official pages follow karein taake internship updates milti rahein. Teeno follow karne ke baad Submit button unlock ho ga.</p>
-          <div style="display:flex;flex-wrap:wrap;gap:10px;margin-bottom:16px;">
-            <a href="https://www.facebook.com/share/18fjqTEg9R/" target="_blank" id="follow-fb"
-               onclick="markFollow('fb')"
-               style="display:flex;align-items:center;gap:8px;background:var(--surface3);border:1.5px solid var(--border);border-radius:10px;padding:11px 18px;text-decoration:none;color:var(--muted);font-size:13px;font-weight:600;transition:all 0.2s;">
-              <span>📘</span><span>Facebook</span><span id="fc-fb" style="display:none;color:var(--green);">✓</span>
+          <p style="font-size:11px;font-weight:700;color:rgba(255,255,255,0.35);letter-spacing:1.5px;text-transform:uppercase;margin-bottom:10px;">Required Before Submission</p>
+          <p style="font-size:13px;color:var(--muted);margin-bottom:16px;line-height:1.6;">Follow our official pages to receive internship updates and announcements. All three must be followed to unlock the Submit button.</p>
+          <div style="display:flex;flex-wrap:wrap;gap:10px;margin-bottom:14px;">
+
+            <!-- Facebook -->
+            <a href="https://www.facebook.com/share/18fjqTEg9R/" target="_blank" id="follow-fb" onclick="markFollow('fb')" class="social-follow-btn">
+              <svg width="17" height="17" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                <path d="M24 12.073C24 5.405 18.627 0 12 0S0 5.405 0 12.073C0 18.1 4.388 23.094 10.125 24v-8.437H7.078v-3.49h3.047V9.41c0-3.025 1.792-4.697 4.533-4.697 1.312 0 2.686.236 2.686.236v2.97h-1.514c-1.491 0-1.956.93-1.956 1.886v2.267h3.328l-.532 3.49h-2.796V24C19.612 23.094 24 18.1 24 12.073z"/>
+              </svg>
+              <span>Facebook</span>
+              <span id="fc-fb" class="follow-tick" style="display:none;">✓</span>
             </a>
-            <a href="https://www.linkedin.com/company/qwetrum-technologies/" target="_blank" id="follow-li"
-               onclick="markFollow('li')"
-               style="display:flex;align-items:center;gap:8px;background:var(--surface3);border:1.5px solid var(--border);border-radius:10px;padding:11px 18px;text-decoration:none;color:var(--muted);font-size:13px;font-weight:600;transition:all 0.2s;">
-              <span>💼</span><span>LinkedIn</span><span id="fc-li" style="display:none;color:var(--green);">✓</span>
+
+            <!-- LinkedIn -->
+            <a href="https://www.linkedin.com/company/qwetrum-technologies/" target="_blank" id="follow-li" onclick="markFollow('li')" class="social-follow-btn">
+              <svg width="17" height="17" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
+              </svg>
+              <span>LinkedIn</span>
+              <span id="fc-li" class="follow-tick" style="display:none;">✓</span>
             </a>
-            <a href="https://www.instagram.com/qwetrumtechnologies" target="_blank" id="follow-ig"
-               onclick="markFollow('ig')"
-               style="display:flex;align-items:center;gap:8px;background:var(--surface3);border:1.5px solid var(--border);border-radius:10px;padding:11px 18px;text-decoration:none;color:var(--muted);font-size:13px;font-weight:600;transition:all 0.2s;">
-              <span>📸</span><span>Instagram</span><span id="fc-ig" style="display:none;color:var(--green);">✓</span>
+
+            <!-- Instagram -->
+            <a href="https://www.instagram.com/qwetrumtechnologies" target="_blank" id="follow-ig" onclick="markFollow('ig')" class="social-follow-btn">
+              <svg width="17" height="17" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/>
+              </svg>
+              <span>Instagram</span>
+              <span id="fc-ig" class="follow-tick" style="display:none;">✓</span>
             </a>
+
           </div>
-          <p id="follow-status-txt" style="font-size:12px;color:var(--dimmer);">ابھی تک 0 / 3 follow کیے ہیں — سب follow کریں پھر Submit کریں</p>
+          <p id="follow-status-txt" style="font-size:12px;color:var(--dimmer);transition:color 0.3s;">0 of 3 followed — Please follow all pages before submitting.</p>
         </div>
       </div>
 
@@ -817,21 +1030,43 @@
   <p class="ty-desc">Your internship application has been received. Our team will review it and get back to you within <strong>3–5 business days</strong> via email.</p>
 
   <div class="ty-card">
-    <div class="ty-card-title">What happens next?</div>
+    <div class="ty-card-title">What Happens Next?</div>
     <div class="ty-steps">
-      <div class="ty-step"><div class="ty-step-num">1</div><div class="ty-step-txt">Our HR team reviews your application & skills</div></div>
-      <div class="ty-step"><div class="ty-step-num">2</div><div class="ty-step-txt">Shortlisted candidates receive an interview call</div></div>
-      <div class="ty-step"><div class="ty-step-num">3</div><div class="ty-step-txt">Final selection & onboarding before 25 May 2026</div></div>
+      <div class="ty-step"><div class="ty-step-num">1</div><div class="ty-step-txt">Our HR team reviews your application and skills.</div></div>
+      <div class="ty-step"><div class="ty-step-num">2</div><div class="ty-step-txt">Shortlisted candidates receive an interview call.</div></div>
+      <div class="ty-step"><div class="ty-step-num">3</div><div class="ty-step-txt">Final selection and onboarding before 25 May 2026.</div></div>
     </div>
   </div>
 
   <div class="ty-card" style="margin-bottom:24px;">
-    <div class="ty-card-title">📲 Follow Us to Stay Updated</div>
-    <p style="font-size:13px;color:var(--muted);margin-bottom:16px;line-height:1.6;">Internship updates, announcements aur tips ke liye hamare official pages follow karein</p>
-    <div style="display:flex;flex-wrap:wrap;gap:10px;justify-content:center;">
-      <a href="https://www.facebook.com/share/18fjqTEg9R/" target="_blank" style="display:flex;align-items:center;gap:8px;background:rgba(65,235,170,0.06);border:1px solid rgba(65,235,170,0.2);border-radius:10px;padding:12px 18px;text-decoration:none;color:var(--green);font-size:13px;font-weight:600;transition:all 0.2s;" onmouseover="this.style.background='rgba(65,235,170,0.12)'" onmouseout="this.style.background='rgba(65,235,170,0.06)'">📘 Facebook</a>
-      <a href="https://www.linkedin.com/company/qwetrum-technologies/" target="_blank" style="display:flex;align-items:center;gap:8px;background:rgba(65,235,170,0.06);border:1px solid rgba(65,235,170,0.2);border-radius:10px;padding:12px 18px;text-decoration:none;color:var(--green);font-size:13px;font-weight:600;transition:all 0.2s;" onmouseover="this.style.background='rgba(65,235,170,0.12)'" onmouseout="this.style.background='rgba(65,235,170,0.06)'">💼 LinkedIn</a>
-      <a href="https://www.instagram.com/qwetrumtechnologies" target="_blank" style="display:flex;align-items:center;gap:8px;background:rgba(65,235,170,0.06);border:1px solid rgba(65,235,170,0.2);border-radius:10px;padding:12px 18px;text-decoration:none;color:var(--green);font-size:13px;font-weight:600;transition:all 0.2s;" onmouseover="this.style.background='rgba(65,235,170,0.12)'" onmouseout="this.style.background='rgba(65,235,170,0.06)'">📸 Instagram</a>
+    <div class="ty-card-title">📲 Stay Connected</div>
+    <p style="font-size:13px;color:var(--muted);margin-bottom:16px;line-height:1.6;">Follow our official pages to receive internship updates, announcements, and tips.</p>
+    <div class="ty-socials-wrap">
+
+      <!-- Facebook -->
+      <a href="https://www.facebook.com/share/18fjqTEg9R/" target="_blank" class="ty-social-link">
+        <svg width="17" height="17" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+          <path d="M24 12.073C24 5.405 18.627 0 12 0S0 5.405 0 12.073C0 18.1 4.388 23.094 10.125 24v-8.437H7.078v-3.49h3.047V9.41c0-3.025 1.792-4.697 4.533-4.697 1.312 0 2.686.236 2.686.236v2.97h-1.514c-1.491 0-1.956.93-1.956 1.886v2.267h3.328l-.532 3.49h-2.796V24C19.612 23.094 24 18.1 24 12.073z"/>
+        </svg>
+        Facebook
+      </a>
+
+      <!-- LinkedIn -->
+      <a href="https://www.linkedin.com/company/qwetrum-technologies/" target="_blank" class="ty-social-link">
+        <svg width="17" height="17" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+          <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
+        </svg>
+        LinkedIn
+      </a>
+
+      <!-- Instagram -->
+      <a href="https://www.instagram.com/qwetrumtechnologies" target="_blank" class="ty-social-link">
+        <svg width="17" height="17" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+          <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/>
+        </svg>
+        Instagram
+      </a>
+
     </div>
   </div>
   <div class="ty-footer">© 2026 Qwetrum Technologies Pvt Ltd · qwetrumtechnologies.tech</div>
@@ -883,14 +1118,15 @@ function updateProgress() {
 
 function showStep(n) {
   document.querySelectorAll('.form-section').forEach(s => s.classList.remove('active'));
-  document.getElementById('step-' + n).classList.add('active');
+  const target = document.getElementById('step-' + n);
+  target.classList.add('active');
   if (n === 4) buildSummary();
   window.scrollTo({ top: 0, behavior: 'smooth' });
 }
 
 function clearError(id) {
   const el = document.getElementById(id);
-  if (el) { el.style.display = 'none'; el.previousElementSibling && el.previousElementSibling.classList && el.previousElementSibling.classList.remove('error'); }
+  if (el) { el.style.display = 'none'; }
 }
 function showError(id, inputEl) {
   const el = document.getElementById(id);
@@ -905,13 +1141,11 @@ function validateStep(step) {
     const fname = document.getElementById('fname');
     const email = document.getElementById('email');
     const phone = document.getElementById('phone');
-    const dob = document.getElementById('dob');
-    const city = document.getElementById('city');
+    const dob   = document.getElementById('dob');
+    const city  = document.getElementById('city');
 
-    clearError('err-fname'); clearError('err-email'); clearError('err-phone');
-    clearError('err-dob'); clearError('err-city');
-    fname.classList.remove('error'); email.classList.remove('error');
-    phone.classList.remove('error'); dob.classList.remove('error'); city.classList.remove('error');
+    [fname, email, phone, dob, city].forEach(el => el.classList.remove('error'));
+    ['err-fname','err-email','err-phone','err-dob','err-city'].forEach(clearError);
 
     if (!fname.value.trim()) { showError('err-fname', fname); ok = false; }
     const emailVal = email.value.trim().toLowerCase();
@@ -930,14 +1164,13 @@ function validateStep(step) {
   }
 
   if (step === 2) {
-    const uni = document.getElementById('university');
-    const deg = document.getElementById('degree');
-    const sem = document.getElementById('semester');
+    const uni  = document.getElementById('university');
+    const deg  = document.getElementById('degree');
+    const sem  = document.getElementById('semester');
     const skills = document.querySelectorAll('input[name="skills"]:checked');
 
-    clearError('err-university'); clearError('err-degree');
-    clearError('err-semester'); clearError('err-skills');
-    uni.classList.remove('error'); deg.classList.remove('error'); sem.classList.remove('error');
+    [uni, deg, sem].forEach(el => el.classList.remove('error'));
+    ['err-university','err-degree','err-semester','err-skills'].forEach(clearError);
 
     if (!uni.value.trim()) { showError('err-university', uni); ok = false; }
     if (!deg.value.trim()) { showError('err-degree', deg); ok = false; }
@@ -946,11 +1179,11 @@ function validateStep(step) {
   }
 
   if (step === 3) {
-    const dept = document.querySelector('input[name="department"]:checked');
-    const mode = document.querySelector('input[name="workmode"]:checked');
+    const dept  = document.querySelector('input[name="department"]:checked');
+    const mode  = document.querySelector('input[name="workmode"]:checked');
     const motiv = document.getElementById('motivation');
-    clearError('err-dept'); clearError('err-mode'); clearError('err-motivation');
     motiv.classList.remove('error');
+    ['err-dept','err-mode','err-motivation'].forEach(clearError);
 
     if (!dept) { document.getElementById('err-dept').style.display = 'block'; ok = false; }
     if (!mode) { document.getElementById('err-mode').style.display = 'block'; ok = false; }
@@ -958,8 +1191,8 @@ function validateStep(step) {
   }
 
   if (step === 4) {
-    const agree = document.getElementById('agree');
     clearError('err-agree');
+    const agree = document.getElementById('agree');
     if (!agree.checked) { document.getElementById('err-agree').style.display = 'block'; ok = false; }
   }
 
@@ -1025,21 +1258,22 @@ const followedPlatforms = new Set();
 function markFollow(platform) {
   setTimeout(() => {
     followedPlatforms.add(platform);
-    const link = document.getElementById('follow-' + platform);
+    const link  = document.getElementById('follow-' + platform);
     const check = document.getElementById('fc-' + platform);
     if (link) {
       link.style.borderColor = 'var(--green)';
-      link.style.color = 'var(--green)';
-      link.style.background = 'rgba(65,235,170,0.08)';
+      link.style.color       = 'var(--green)';
+      link.style.background  = 'rgba(65,235,170,0.08)';
     }
     if (check) check.style.display = 'inline';
     const count = followedPlatforms.size;
     const txt = document.getElementById('follow-status-txt');
     if (count >= 3) {
-      txt.textContent = '✅ Shukriya! Ab aap Submit kar sakte hain.';
+      txt.textContent = '✅ Thank you! You may now submit your application.';
       txt.style.color = 'var(--green)';
     } else {
-      txt.textContent = count + ' / 3 follow kiye — ' + (3 - count) + ' aur baaki hain';
+      txt.textContent = count + ' of 3 followed — ' + (3 - count) + ' more remaining.';
+      txt.style.color = '';
     }
   }, 400);
 }
@@ -1059,21 +1293,21 @@ function buildSummary() {
   const mode = (document.querySelector('input[name="workmode"]:checked') || {}).value || '—';
 
   const rows = [
-    ['Full Name', f.name.value],
-    ['Email', f.email.value],
-    ['Phone', f.phone.value],
-    ['City', f.city.value],
+    ['Full Name',   f.name.value],
+    ['Email',       f.email.value],
+    ['Phone',       f.phone.value],
+    ['City',        f.city.value],
     ['Date of Birth', f.dob.value],
-    ['University', f.university.value],
-    ['Degree', f.degree.value],
-    ['Semester', f.semester.value],
-    ['CGPA', f.cgpa.value || '—'],
-    ['Skills', skills],
-    ['Portfolio', f.portfolio.value || '—'],
-    ['Experience', f.experience.value],
-    ['Department', dept],
-    ['Work Mode', mode],
-    ['Heard From', f.heardFrom.value || '—'],
+    ['University',  f.university.value],
+    ['Degree',      f.degree.value],
+    ['Semester',    f.semester.value],
+    ['CGPA',        f.cgpa.value || '—'],
+    ['Skills',      skills],
+    ['Portfolio',   f.portfolio.value || '—'],
+    ['Experience',  f.experience.value],
+    ['Department',  dept],
+    ['Work Mode',   mode],
+    ['Heard From',  f.heardFrom.value || '—'],
   ];
 
   const grid = document.getElementById('summary-grid');
@@ -1085,12 +1319,11 @@ function buildSummary() {
 async function submitForm() {
   if (!validateStep(4)) return;
 
-  // Check all 3 followed
   if (followedPlatforms.size < 3) {
     const txt = document.getElementById('follow-status-txt');
-    txt.textContent = '⚠️ Pehle teeno pages follow karein, phir submit karein!';
+    txt.textContent = '⚠️ Please follow all three pages before submitting.';
     txt.style.color = 'var(--danger)';
-    document.getElementById('follow-status-txt').scrollIntoView({ behavior: 'smooth', block: 'center' });
+    txt.scrollIntoView({ behavior: 'smooth', block: 'center' });
     return;
   }
 
@@ -1106,24 +1339,24 @@ async function submitForm() {
   const mode = (document.querySelector('input[name="workmode"]:checked') || {}).value || '';
 
   const params = new URLSearchParams({
-    name: f.name.value.trim(),
-    email: f.email.value.trim(),
-    phone: f.phone.value.trim(),
-    dob: f.dob.value,
-    city: f.city.value.trim(),
-    gender: f.gender.value,
+    name:       f.name.value.trim(),
+    email:      f.email.value.trim(),
+    phone:      f.phone.value.trim(),
+    dob:        f.dob.value,
+    city:       f.city.value.trim(),
+    gender:     f.gender.value,
     university: f.university.value.trim(),
-    degree: f.degree.value.trim(),
-    semester: f.semester.value,
-    cgpa: f.cgpa.value.trim(),
-    skills: skills,
-    portfolio: f.portfolio.value.trim(),
+    degree:     f.degree.value.trim(),
+    semester:   f.semester.value,
+    cgpa:       f.cgpa.value.trim(),
+    skills:     skills,
+    portfolio:  f.portfolio.value.trim(),
     experience: f.experience.value,
     department: dept,
-    workmode: mode,
+    workmode:   mode,
     motivation: f.motivation.value.trim(),
-    heardFrom: f.heardFrom.value,
-    emergency: f.emergency.value.trim()
+    heardFrom:  f.heardFrom.value,
+    emergency:  f.emergency.value.trim()
   });
 
   try {
