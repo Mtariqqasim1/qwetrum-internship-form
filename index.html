@@ -936,18 +936,7 @@
             <span class="field-error" id="err-dept">Please select a department.</span>
           </div>
 
-          <div class="field-group full">
-            <label>Work Mode Preference <span class="req">*</span></label>
-            <div class="avail-options" id="mode-options">
-              
-              <label class="avail-card">
-                <input type="radio" name="workmode" value="Remote">
-                <div class="avail-title"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="color:var(--green);display:inline-block;vertical-align:middle;margin-right:6px;"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>Remote</div>
-                <div class="avail-sub">Work from anywhere · Online</div>
-              </label>
-            </div>
-            <span class="field-error" id="err-mode">Please select a work mode.</span>
-          </div>
+          
 
           <div class="field-group full">
             <label for="motivation">Why do you want to intern at Qwetrum? <span class="req">*</span></label>
@@ -1207,7 +1196,7 @@ function validateStep(step) {
     ['err-dept','err-mode','err-motivation'].forEach(clearError);
 
     if (!dept) { document.getElementById('err-dept').style.display = 'block'; ok = false; }
-    if (!mode) { document.getElementById('err-mode').style.display = 'block'; ok = false; }
+   
     if (!motiv.value.trim() || motiv.value.trim().length < 30) { showError('err-motivation', motiv); ok = false; }
   }
 
@@ -1267,18 +1256,15 @@ document.getElementById('dept-grid').addEventListener('change', e => {
   document.getElementById('dept-other-wrap').style.display = isOther ? 'block' : 'none';
 });
 
-// Work mode cards
-document.getElementById('mode-options').addEventListener('change', e => {
-  document.querySelectorAll('.avail-card').forEach(c => c.classList.remove('selected'));
-  if (e.target.closest('.avail-card')) e.target.closest('.avail-card').classList.add('selected');
-});
+// Work mode cards (removed — work mode section deleted from HTML)
 
 // --- FOLLOW TRACKING ---
-const followedPlatforms = new Set();
+const followedPlatforms = new Set(JSON.parse(localStorage.getItem('qt_followed') || '[]'));
 
 function markFollow(platform) {
   setTimeout(() => {
     followedPlatforms.add(platform);
+    localStorage.setItem('qt_followed', JSON.stringify([...followedPlatforms]));
     const link  = document.getElementById('follow-' + platform);
     const check = document.getElementById('fc-' + platform);
     if (link) {
@@ -1311,7 +1297,7 @@ function buildSummary() {
   const otherTxt = document.getElementById('other-skill-input').value.trim();
   const skills = rawSkills.map(v => v === '__other__' ? (otherTxt || 'Other') : v).join(', ') || '—';
   const dept = getDept() || '—';
-  const mode = (document.querySelector('input[name="workmode"]:checked') || {}).value || '—';
+  const mode = '—';
 
   const rows = [
     ['Full Name',   f.name.value],
@@ -1357,7 +1343,7 @@ async function submitForm() {
   const otherTxt = document.getElementById('other-skill-input').value.trim();
   const skills = rawSkills.map(v => v === '__other__' ? (otherTxt || 'Other') : v).join(', ');
   const dept = getDept();
-  const mode = (document.querySelector('input[name="workmode"]:checked') || {}).value || '';
+  const mode = '';
 
   const params = new URLSearchParams({
     name:       f.name.value.trim(),
