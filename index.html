@@ -1084,6 +1084,10 @@
 
 <script>
 const APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyVtE177Jj3oc4hE_Mbdnl80coas8eQOVGSwY3m2g-G_WIJ_R4XAT_k0VsE9EqKLwgu7A/exec";
+const LS_FORM = 'qt_form_data';
+const LS_STEP = 'qt_form_step';
+const LS_FOLLOWED = 'qt_followed';
+const LS_SCROLL_TO_FOLLOW = 'qt_scroll_follow';
 
 let currentStep = 1;
 const totalSteps = 4;
@@ -1093,6 +1097,99 @@ const btnBack = document.getElementById('btn-back');
 const btnNext = document.getElementById('btn-next');
 const stepCounter = document.getElementById('step-counter');
 
+// ── SAVE FORM DATA TO LOCALSTORAGE ──────────────────────────
+function saveFormData() {
+  const f = document.getElementById('internship-form');
+  const skills = Array.from(document.querySelectorAll('input[name="skills"]:checked')).map(c => c.value);
+  const dept = (document.querySelector('input[name="department"]:checked') || {}).value || '';
+  const data = {
+    name:       f.name.value,
+    email:      f.email.value,
+    phone:      f.phone.value,
+    dob:        f.dob.value,
+    city:       f.city.value,
+    gender:     f.gender.value,
+    university: f.university.value,
+    degree:     f.degree.value,
+    semester:   f.semester.value,
+    cgpa:       f.cgpa.value,
+    skills:     skills,
+    otherSkill: document.getElementById('other-skill-input').value,
+    portfolio:  f.portfolio.value,
+    experience: f.experience.value,
+    dept:       dept,
+    deptOther:  document.getElementById('dept-other-input').value,
+    motivation: f.motivation.value,
+    heardFrom:  f.heardFrom.value,
+    emergency:  f.emergency.value,
+  };
+  localStorage.setItem(LS_FORM, JSON.stringify(data));
+  localStorage.setItem(LS_STEP, currentStep);
+}
+
+// ── RESTORE FORM DATA FROM LOCALSTORAGE ─────────────────────
+function restoreFormData() {
+  try {
+    const raw = localStorage.getItem(LS_FORM);
+    if (!raw) return;
+    const d = JSON.parse(raw);
+    const f = document.getElementById('internship-form');
+
+    if (d.name)       f.name.value       = d.name;
+    if (d.email)      f.email.value      = d.email;
+    if (d.phone)      f.phone.value      = d.phone;
+    if (d.dob)        f.dob.value        = d.dob;
+    if (d.city)       f.city.value       = d.city;
+    if (d.gender)     f.gender.value     = d.gender;
+    if (d.university) f.university.value = d.university;
+    if (d.degree)     f.degree.value     = d.degree;
+    if (d.semester)   f.semester.value   = d.semester;
+    if (d.cgpa)       f.cgpa.value       = d.cgpa;
+    if (d.portfolio)  f.portfolio.value  = d.portfolio;
+    if (d.experience) f.experience.value = d.experience;
+    if (d.motivation) f.motivation.value = d.motivation;
+    if (d.heardFrom)  f.heardFrom.value  = d.heardFrom;
+    if (d.emergency)  f.emergency.value  = d.emergency;
+
+    // Skills checkboxes
+    if (d.skills && d.skills.length) {
+      d.skills.forEach(val => {
+        const cb = document.querySelector('input[name="skills"][value="' + val + '"]');
+        if (cb) {
+          cb.checked = true;
+          cb.closest('.skill-tag').classList.add('selected');
+          if (val === '__other__') {
+            document.getElementById('other-skill-wrap').style.display = 'block';
+          }
+        }
+      });
+    }
+    if (d.otherSkill) document.getElementById('other-skill-input').value = d.otherSkill;
+
+    // Department card
+    if (d.dept) {
+      const radio = document.querySelector('input[name="department"][value="' + d.dept + '"]');
+      if (radio) {
+        radio.checked = true;
+        radio.closest('.dept-card').classList.add('selected');
+        if (d.dept === '__dept_other__') {
+          document.getElementById('dept-other-wrap').style.display = 'block';
+          if (d.deptOther) document.getElementById('dept-other-input').value = d.deptOther;
+        }
+      }
+    }
+
+    // Restore step
+    const savedStep = parseInt(localStorage.getItem(LS_STEP)) || 1;
+    currentStep = savedStep;
+  } catch(e) {}
+}
+
+// ── AUTO SAVE on every input change ─────────────────────────
+document.getElementById('internship-form').addEventListener('input', saveFormData);
+document.getElementById('internship-form').addEventListener('change', saveFormData);
+
+// ── PROGRESS ────────────────────────────────────────────────
 function updateProgress() {
   const pct = (currentStep / totalSteps) * 100;
   progressFill.style.width = pct + '%';
@@ -1131,6 +1228,7 @@ function showStep(n) {
   const target = document.getElementById('step-' + n);
   target.classList.add('active');
   if (n === 4) buildSummary();
+  localStorage.setItem(LS_STEP, n);
   window.scrollTo({ top: 0, behavior: 'smooth' });
 }
 
@@ -1190,13 +1288,11 @@ function validateStep(step) {
 
   if (step === 3) {
     const dept  = document.querySelector('input[name="department"]:checked');
-    const mode  = document.querySelector('input[name="workmode"]:checked');
     const motiv = document.getElementById('motivation');
     motiv.classList.remove('error');
-    ['err-dept','err-mode','err-motivation'].forEach(clearError);
+    ['err-dept','err-motivation'].forEach(clearError);
 
     if (!dept) { document.getElementById('err-dept').style.display = 'block'; ok = false; }
-   
     if (!motiv.value.trim() || motiv.value.trim().length < 30) { showError('err-motivation', motiv); ok = false; }
   }
 
@@ -1231,6 +1327,7 @@ document.querySelectorAll('.skill-tag').forEach(tag => {
       if (cb.id === 'cb-other') {
         document.getElementById('other-skill-wrap').style.display = cb.checked ? 'block' : 'none';
       }
+      saveFormData();
     }, 0);
   });
 });
@@ -1254,17 +1351,17 @@ document.getElementById('dept-grid').addEventListener('change', e => {
   if (e.target.closest('.dept-card')) e.target.closest('.dept-card').classList.add('selected');
   const isOther = e.target.value === '__dept_other__';
   document.getElementById('dept-other-wrap').style.display = isOther ? 'block' : 'none';
+  saveFormData();
 });
 
 // Work mode cards (removed — work mode section deleted from HTML)
 
-// --- FOLLOW TRACKING ---
-const followedPlatforms = new Set(JSON.parse(localStorage.getItem('qt_followed') || '[]'));
+// ── FOLLOW TRACKING ──────────────────────────────────────────
+const followedPlatforms = new Set(JSON.parse(localStorage.getItem(LS_FOLLOWED) || '[]'));
 
-function markFollow(platform) {
-  setTimeout(() => {
-    followedPlatforms.add(platform);
-    localStorage.setItem('qt_followed', JSON.stringify([...followedPlatforms]));
+function applyFollowUI() {
+  const count = followedPlatforms.size;
+  followedPlatforms.forEach(platform => {
     const link  = document.getElementById('follow-' + platform);
     const check = document.getElementById('fc-' + platform);
     if (link) {
@@ -1273,15 +1370,26 @@ function markFollow(platform) {
       link.style.background  = 'rgba(65,235,170,0.08)';
     }
     if (check) check.style.display = 'inline';
-    const count = followedPlatforms.size;
-    const txt = document.getElementById('follow-status-txt');
+  });
+  const txt = document.getElementById('follow-status-txt');
+  if (txt) {
     if (count >= 3) {
       txt.innerHTML = '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--green)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="display:inline;vertical-align:middle;margin-right:5px"><polyline points="20 6 9 17 4 12"/></svg> Thank you! You may now submit your application.';
       txt.style.color = 'var(--green)';
-    } else {
+    } else if (count > 0) {
       txt.textContent = count + ' of 3 followed — ' + (3 - count) + ' more remaining.';
       txt.style.color = '';
     }
+  }
+}
+
+function markFollow(platform) {
+  // Save flag so when we come back from social page we scroll to follow section
+  localStorage.setItem(LS_SCROLL_TO_FOLLOW, '1');
+  setTimeout(() => {
+    followedPlatforms.add(platform);
+    localStorage.setItem(LS_FOLLOWED, JSON.stringify([...followedPlatforms]));
+    applyFollowUI();
   }, 400);
 }
 
@@ -1300,21 +1408,20 @@ function buildSummary() {
   const mode = '—';
 
   const rows = [
-    ['Full Name',   f.name.value],
-    ['Email',       f.email.value],
-    ['Phone',       f.phone.value],
-    ['City',        f.city.value],
+    ['Full Name',     f.name.value],
+    ['Email',         f.email.value],
+    ['Phone',         f.phone.value],
+    ['City',          f.city.value],
     ['Date of Birth', f.dob.value],
-    ['University',  f.university.value],
-    ['Degree',      f.degree.value],
-    ['Semester',    f.semester.value],
-    ['CGPA',        f.cgpa.value || '—'],
-    ['Skills',      skills],
-    ['Portfolio',   f.portfolio.value || '—'],
-    ['Experience',  f.experience.value],
-    ['Department',  dept],
-    ['Work Mode',   mode],
-    ['Heard From',  f.heardFrom.value || '—'],
+    ['University',    f.university.value],
+    ['Degree',        f.degree.value],
+    ['Semester',      f.semester.value],
+    ['CGPA',          f.cgpa.value || '—'],
+    ['Skills',        skills],
+    ['Portfolio',     f.portfolio.value || '—'],
+    ['Experience',    f.experience.value],
+    ['Department',    dept],
+    ['Heard From',    f.heardFrom.value || '—'],
   ];
 
   const grid = document.getElementById('summary-grid');
@@ -1343,7 +1450,6 @@ async function submitForm() {
   const otherTxt = document.getElementById('other-skill-input').value.trim();
   const skills = rawSkills.map(v => v === '__other__' ? (otherTxt || 'Other') : v).join(', ');
   const dept = getDept();
-  const mode = '';
 
   const params = new URLSearchParams({
     name:       f.name.value.trim(),
@@ -1360,7 +1466,7 @@ async function submitForm() {
     portfolio:  f.portfolio.value.trim(),
     experience: f.experience.value,
     department: dept,
-    workmode:   mode,
+    workmode:   '',
     motivation: f.motivation.value.trim(),
     heardFrom:  f.heardFrom.value,
     emergency:  f.emergency.value.trim()
@@ -1370,12 +1476,34 @@ async function submitForm() {
     await fetch(APPS_SCRIPT_URL + '?' + params.toString(), { method: 'GET', mode: 'no-cors' });
   } catch(e) {}
 
+  // Clear saved form data after successful submit
+  localStorage.removeItem(LS_FORM);
+  localStorage.removeItem(LS_STEP);
+  localStorage.removeItem(LS_FOLLOWED);
+  localStorage.removeItem(LS_SCROLL_TO_FOLLOW);
+
   document.getElementById('ty-name').textContent = f.name.value.trim().split(' ')[0];
   document.getElementById('thankyou').classList.add('active');
   document.body.style.overflow = 'hidden';
 }
 
+// ── ON PAGE LOAD: RESTORE EVERYTHING ────────────────────────
+restoreFormData();
+showStep(currentStep);
 updateProgress();
+applyFollowUI();
+
+// If student came back from a social page, scroll to follow section
+if (localStorage.getItem(LS_SCROLL_TO_FOLLOW) === '1') {
+  localStorage.removeItem(LS_SCROLL_TO_FOLLOW);
+  // Small delay to let page render first
+  setTimeout(() => {
+    const followSection = document.getElementById('follow-fb');
+    if (followSection) {
+      followSection.closest('div[style]').scrollIntoView({ behavior: 'smooth', block: 'center' });
+    }
+  }, 300);
+}
 </script>
 </body>
 </html>
