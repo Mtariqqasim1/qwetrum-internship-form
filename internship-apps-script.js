@@ -7,7 +7,7 @@
 // ─── CONFIGURATION ──────────────────────────────────────────
 var RECIPIENT_EMAIL  = "qwetrumtechnologies@gmail.com"; // ← Team ka email
 var SHEET_NAME       = "Applications";                   // ← Sheet tab ka naam
-var SPREADSHEET_ID   = "";  // ← OPTIONAL: Agar alag spreadsheet use karni ho toh ID yahan likho
+var SPREADSHEET_ID   = "13MEQTxjPo7ET-qDFK1mFJoEZAO7Vyv7pjOQHTDj1_io";  // ← OPTIONAL: Agar alag spreadsheet use karni ho toh ID yahan likho
                              //   Warna khali rakhein — same spreadsheet use hogi
 // ────────────────────────────────────────────────────────────
 
@@ -224,14 +224,6 @@ function buildStudentConfirmationEmail(name, department, skills, workmode) {
           </tr>
         </table>
 
-        <table width="100%" cellpadding="0" cellspacing="0" style="margin-bottom:10px;">
-          <tr>
-            <td style="background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.07);border-radius:10px;padding:12px 16px;">
-              <p style="margin:0 0 2px;font-size:10px;font-weight:600;color:#41ebaa;letter-spacing:1px;text-transform:uppercase;">💻 Preferred Work Mode</p>
-              <p style="margin:0;font-size:14px;color:#fff;">${workmode}</p>
-            </td>
-          </tr>
-        </table>
       </td></tr>
 
       <!-- NEXT STEPS -->
